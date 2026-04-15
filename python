@@ -1,0 +1,16 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/dividir', methods=['POST'])
+def dividir():
+    data = request.get_json()
+
+    num1 = float(data['num1'])
+    num2 = float(data['num2'])
+
+    resultado = num1 / num2
+
+    return jsonify({"resultado": resultado})
+
+app.run(host="0.0.0.0", port=3000)
