@@ -3,14 +3,20 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)  # 🔥 habilita CORS
+
+# 🔥 habilitar CORS BIEN
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
 def home():
     return "Microservicio de división activo 🚀"
 
-@app.route('/dividir', methods=['POST'])
+# 👇 IMPORTANTE: incluir OPTIONS para preflight
+@app.route('/dividir', methods=['POST', 'OPTIONS'])
 def dividir():
+    if request.method == 'OPTIONS':
+        return '', 200  # responde preflight
+
     try:
         data = request.get_json()
 
@@ -28,5 +34,4 @@ def dividir():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 3000)))
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 3000)))
