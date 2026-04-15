@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microservicios Calculadora</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+input {
+  padding: 10px;
+  margin: 5px;
+  width: 120px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #22c55e;
+  color: black;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #16a34a;
+}
+
+#resultado {
+  margin-top: 20px;
+  font-size: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>Calculadora con Microservicios</h1>
+
+<input type="number" id="num1" placeholder="Número 1">
+<input type="number" id="num2" placeholder="Número 2">
+
+<br>
+
+<button onclick="sumar()">Suma (Node)</button>
+<button onclick="restar()">Resta (Express)</button>
+<button onclick="multiplicar()">Multiplicación (PHP)</button>
+<button onclick="dividir()">División (Python)</button>
+
+<div id="resultado"></div>
+
+<script>
+const getValores = () => {
+  return {
+    num1: document.getElementById("num1").value,
+    num2: document.getElementById("num2").value
+  };
+};
+
+// ✅ NODE - PATH PARAMS
+async function sumar() {
+  const { num1, num2 } = getValores();
+
+  const res = await fetch(`https://TU-NODE.onrender.com/suma/${num1}/${num2}`);
+  const data = await res.json();
+
+  document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
+}
+
+// ✅ EXPRESS - QUERY
+async function restar() {
+  const { num1, num2 } = getValores();
+
+  const res = await fetch(`https://TU-EXPRESS.onrender.com/resta?num1=${num1}&num2=${num2}`);
+  const data = await res.json();
+
+  document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
+}
+
+// ✅ PHP - BODY
+async function multiplicar() {
+  const { num1, num2 } = getValores();
+
+  const res = await fetch(`https://TU-PHP.onrender.com/multiplicar.php`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ num1, num2 })
+  });
+
+  const data = await res.json();
+  document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
+}
+
+// ✅ PYTHON - BODY
+async function dividir() {
+  const { num1, num2 } = getValores();
+
+  const res = await fetch(`https://TU-PYTHON.onrender.com/dividir`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ num1, num2 })
+  });
+
+  const data = await res.json();
+  document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
+}
+</script>
+
+</body>
+</html>
