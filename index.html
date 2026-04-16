@@ -82,7 +82,7 @@ async function sumar() {
 async function restar() {
   const { num1, num2 } = getValores();
 
-  const res = await fetch(`https://TU-EXPRESS.onrender.com/resta?num1=${num1}&num2=${num2}`);
+  const res = await fetch(`https://restaexpress.onrender.com/resta?num1=${num1}&num2=${num2}`);
   const data = await res.json();
 
   document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
