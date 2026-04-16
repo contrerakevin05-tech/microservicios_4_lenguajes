@@ -1,10 +1,18 @@
 const express = require('express');
-const cors = require('cors');
-
 const app = express();
 
-// 🔥 habilitar CORS
-app.use(cors());
+// 🔥 CORS MANUAL (más seguro que confiar solo en middleware)
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 app.get('/resta', (req, res) => {
   const { num1, num2 } = req.query;
