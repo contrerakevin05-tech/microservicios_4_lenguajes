@@ -72,7 +72,7 @@ const getValores = () => {
 async function sumar() {
   const { num1, num2 } = getValores();
 
-  const res = await fetch(`https://sumaexpress.onrender.com${num1}/${num2}`);
+  const res = await fetch(`https://nodesumapath.onrender.com${num1}/${num2}`);
   const data = await res.json();
 
   document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
